@@ -96,23 +96,13 @@ module.exports = {
             Object.keys(req.headers).forEach(function(key) {
                 console.log("req.headers="+key+"="+JSON.stringify(req.headers[key]));
             });
-            console.log("req.body="+JSON.stringify(req.body));
-
-            //接收前台POST过来的base64
-            var fileContent = req.body.fileContent;
-            //过滤data:URL
-            if(~fileContent.indexOf("data:audio/mp3;base64,")){
-                var base64Data = fileContent.replace("data:audio/mp3;base64,", "");
-                var dataBuffer = new Buffer(base64Data, 'base64');
-                fs.writeFile("out.mp3", dataBuffer, function(err) {
-                    if(err){
-                        console.log(err);
-                    }else{
-                        console.log("保存成功！");
-                    }
-                });
-            }
-            res.send(req.body);
+            //console.log("req.body="+JSON.stringify(req.body));
+            console.log(req.body.name)
+            req.files['file1'].mv('filename.jpg', function(err) {
+                console.log("保存成功"+err)
+                res.send("回调里面");
+            });
+            //res.send(req.body);
             // request(that.getProxyRequestInfo(req), that.proxyResponseCallBack(req, res, function(json, flag){
             //     console.log("json="+JSON.stringify(json));
             //     res.send(json);
